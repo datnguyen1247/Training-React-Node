@@ -1,9 +1,17 @@
-
+import { Route, Routes } from "react-router-dom"
+import { lazy } from "react";
+const HomePage = lazy(() => import('./pages/home'));
+const Customization = lazy(() => import('./pages/customization'));
+const Translation = lazy(() => import('./pages/translation'));
 function App() {
 
   return (
     <>
-      App
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/customization" element={<Customization />} />
+      <Route path="/translation" element={<Translation />} />
+    </Routes>
     </>
   )
 }

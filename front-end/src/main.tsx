@@ -1,10 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.tsx'
-
+import './index.css'
+import { BrowserRouter } from 'react-router-dom'
+import '@shopify/polaris/build/esm/styles.css';
+import enTranslations from '@shopify/polaris/locales/en.json';
+import {AppProvider} from '@shopify/polaris';
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+   <AppProvider i18n={enTranslations}>
+      <StrictMode>
+        <BrowserRouter><App /></BrowserRouter>
+      </StrictMode>
+    </AppProvider>
 )

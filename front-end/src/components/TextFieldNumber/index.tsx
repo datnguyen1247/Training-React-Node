@@ -1,15 +1,10 @@
-import { TextField } from '@shopify/polaris'
+import { TextField } from "@shopify/polaris";
 
-type TextFieldNumber ={
-    lable:string
-}
-export default function TextFieldNumber({lable}:TextFieldNumber) {
+type TextFieldNumber = {
+  label: string;
+};
+export default function TextFieldNumber({ label }: TextFieldNumber) {
   return (
-    <TextField
-    label={lable}
-    type="number"
-    value="25"
-    autoComplete="off"
-    />
-  )
+    <TextField label={label} type="number" value="25" autoComplete="off" />
+  );
 }

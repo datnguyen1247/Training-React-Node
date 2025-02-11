@@ -1,29 +1,25 @@
-import { ReactNode } from "react"
-import Title from "../Title"
-import { CaretUpIcon } from "@shopify/polaris-icons"
-import { Divider } from "@shopify/polaris"
+import { ReactNode } from "react";
+import Title from "../Title";
+import { CaretUpIcon } from "@shopify/polaris-icons";
+import { Divider } from "@shopify/polaris";
 
 type Property = {
-    chidlren: ReactNode
-}  
+  title: string;
+  children: ReactNode;
+};
 
-export default function Property({chidlren}:Property) {
+export default function Property({ children, title }: Property) {
   return (
     <>
-    <div style={{
-                padding:'16px'  
-            }}>
-                <Title title="Discount box size" icon={CaretUpIcon}/>
-                <div style={{
-                    display:'flex',
-                    alignItems:'center',
-                    justifyContent:'center',
-                    gap:'16px'
-                }}>
-                {chidlren}               
-            </div>
-            </div>
-            <Divider />
+      <div
+        style={{
+          padding: "16px",
+        }}
+      >
+        <Title title={title} icon={CaretUpIcon} />
+        {children}
+      </div>
+      <Divider />
     </>
-  )
+  );
 }

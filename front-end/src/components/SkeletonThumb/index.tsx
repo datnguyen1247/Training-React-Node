@@ -4,7 +4,7 @@ export default function SkeletonThumb() {
       style={{
         width: "123.89px",
         height: "123.89px",
-        backgroundColor: "#EBEBEB",
+        backgroundColor: "#ebebeb",
       }}
     ></div>
   );

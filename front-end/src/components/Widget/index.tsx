@@ -12,6 +12,8 @@ import SkeletonText from "../SkeletonText";
 import SkeletonThumb from "../SkeletonThumb";
 export default function Widget() {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
+  // const count = useSelector((state: RootState) => state.test.value);
+
   const handleButtonClick = useCallback(
     (index: number) => {
       if (activeButtonIndex === index) return;
@@ -41,40 +43,31 @@ export default function Widget() {
         </ButtonGroup>
       </InlineStack>
       <div style={{ marginTop: "16px" }}>
-        <div
-          style={{
-            margin: "27px 0",
-            height: "64px",
-            borderBottom: "1px",
-            borderTop: "1px",
-            borderColor: "rgba(235, 235, 235, 1) transparent",
-            borderStyle: "solid",
-          }}
-        ></div>
+        <div className="border-header"></div>
 
-        <BlockStack gap="1600">
+        <BlockStack gap="1000">
           <Text variant="headingXl" as="h4">
             Your cart
           </Text>
-          <InlineStack gap="1600">
+          <InlineStack gap="500">
             <InlineStack>
               <SkeletonThumb />
             </InlineStack>
 
             <div style={{ flex: 1 }}>
-              <BlockStack gap="800">
+              <BlockStack gap="400">
                 <SkeletonText />
                 <SkeletonText width="35%" />
               </BlockStack>
             </div>
           </InlineStack>
-          <InlineStack gap="1600">
+          <InlineStack gap="500">
             <InlineStack>
               <SkeletonThumb />
             </InlineStack>
 
             <div style={{ flex: 1 }}>
-              <BlockStack gap="800">
+              <BlockStack gap="400">
                 <SkeletonText />
                 <SkeletonText width="35%" />
               </BlockStack>
@@ -86,29 +79,9 @@ export default function Widget() {
               <input
                 type="text"
                 placeholder="Label"
-                style={{
-                  width: "333px",
-                  outline: "none",
-                  height: "52px",
-                  border: "1px solid #dedede",
-                  padding: "15.5px 11px",
-                  borderRadius: "4px",
-                }}
+                className="input-discount"
               />
-              <button
-                style={{
-                  height: "39px",
-                  width: "57px",
-                  padding: "9px",
-                  backgroundColor: "#1773b0",
-                  outline: "none",
-                  border: "none",
-                  borderRadius: "2px",
-                  color: "#fff",
-                }}
-              >
-                Label
-              </button>
+              <button className="btn-discount">Label</button>
             </InlineStack>
             <SkeletonText radius="0" height="52.39px" width="40%" />
           </BlockStack>

@@ -8,3 +8,33 @@
   max-width: 831px;
   margin: 57px auto 0 auto;
 }
+
+.border-header{
+  margin: 27px 0;
+  height: 64px;
+  border-bottom: 1px;
+  border-top: 1px;
+  border-color: rgba(235, 235, 235, 1) transparent;
+  border-style: solid;
+}
+
+.input-discount{
+  width: 333px;
+  outline: none;
+  height: 52px;
+  border: 1px solid #dedede;
+  padding: 15.5px 11px;
+  border-radius: 4px,
+}
+
+.btn-discount{
+  height: 39px;
+  width: 57px;
+  padding: 9px;
+  background-color: #1773b0;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  margin: auto 0;
+}

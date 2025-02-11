@@ -8,10 +8,13 @@ function App() {
   return (
     <>
       <Routes>
+        <Route
+          path="/translation/edit/:translationId"
+          element={<EditTranslation />}
+        />
         <Route path="/" element={<HomePage />} />
         <Route path="/customization" element={<Customization />} />
         <Route path="/translation" element={<Translation />} />
-        <Route path="/translation/1" element={<EditTranslation />} />
       </Routes>
     </>
   );

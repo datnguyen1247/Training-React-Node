@@ -1,7 +1,12 @@
-import { ActionList, Frame, Icon, Modal, Popover } from "@shopify/polaris";
+import { ActionList, Icon, Modal, Popover } from "@shopify/polaris";
 import { MenuHorizontalIcon } from "@shopify/polaris-icons";
 import { useCallback, useState } from "react";
-export default function DotAction() {
+
+type DotAction = {
+  onDeleteTranslation: (id: number) => void;
+  id: number;
+};
+export default function DotAction({ onDeleteTranslation, id }: DotAction) {
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
   const [activeModal, setActiveModal] = useState(false);
@@ -10,7 +15,9 @@ export default function DotAction() {
     () => setActiveModal((active) => !active),
     []
   );
-
+  const handleClickDelete = () => {
+    onDeleteTranslation(id);
+  };
   const activator = (
     <div style={{ padding: "4px" }} onClick={toggleActive}>
       <Icon source={MenuHorizontalIcon} tone="base" />
@@ -38,27 +45,25 @@ export default function DotAction() {
         />
       </Popover>
       {activeModal && (
-        <Frame>
-          <Modal
-            activator={activator}
-            open={activeModal}
-            onClose={toggleModal}
-            title="Remove 1 language?"
-            primaryAction={{
-              destructive: true,
+        <Modal
+          activator={activator}
+          open={activeModal}
+          onClose={toggleModal}
+          title="Remove 1 language?"
+          primaryAction={{
+            destructive: true,
+            content: "Delete",
+            onAction: handleClickDelete,
+          }}
+          secondaryActions={[
+            {
               content: "Cancel",
               onAction: toggleModal,
-            }}
-            secondaryActions={[
-              {
-                content: "Delete",
-                onAction: toggleModal,
-              },
-            ]}
-          >
-            <Modal.Section>This can’t be undone.</Modal.Section>
-          </Modal>
-        </Frame>
+            },
+          ]}
+        >
+          <Modal.Section>This can’t be undone.</Modal.Section>
+        </Modal>
       )}
     </div>
   );

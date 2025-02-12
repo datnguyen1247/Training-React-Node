@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const Sequelize = require("sequelize");
 
 const config = {
     username: "root",
@@ -24,4 +24,5 @@ const close = async () => {
     await sequelize.close();
 };
 
-module.exports = { connection, close };
+module.exports = {connection, close}
+

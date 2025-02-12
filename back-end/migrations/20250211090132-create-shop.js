@@ -16,20 +16,23 @@ module.exports = {
         type: Sequelize.STRING
       },
       created_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull:true
       },
       updated_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull:true
       },
       createdAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
-    });
+    })
+    ;
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Shops');

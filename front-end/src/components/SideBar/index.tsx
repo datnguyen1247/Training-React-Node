@@ -11,17 +11,66 @@ import CircleBorder from "../CircleBorder";
 import Property from "../Property";
 import TextFieldNumber from "../TextFieldNumber";
 import { useCallback, useState } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { updateCustomize } from "../../slices/customizeSlice";
+import { RootState } from "../../stores";
+import { RangeSliderValue } from "@shopify/polaris/build/ts/src/components/RangeSlider/types";
+import { DATA_BORDER_TYPE, DATA_BUTTON_TYPE } from "../../constants";
 export default function SideBar() {
-  const [selected, setSelected] = useState("today");
-  const handleSelectChange = useCallback(
-    (value: string) => setSelected(value),
-    []
+  const dispatch = useDispatch();
+  const styles = useSelector(
+    (state: RootState) => state.customize.style,
+    shallowEqual
   );
-  const options = [
-    { label: "Today", value: "today" },
-    { label: "Yesterday", value: "yesterday" },
-    { label: "Last 7 days", value: "lastWeek" },
-  ];
+  const [inputBorderType, setInputBorderType] = useState("Dotted");
+  const [btnBorderType, setBtnBorderType] = useState("Dotted");
+  const [btnType, setBtnType] = useState("Plain");
+  const [layout, setLayout] = useState(styles.direction);
+  const [inputBorderRadius, setInputBorderRadius] = useState<RangeSliderValue>(
+    () => styles.input_border_radius as unknown as RangeSliderValue
+  );
+  const [buttonBorderWidth, setButtonBorderWidth] = useState<RangeSliderValue>(
+    () => styles.input_border_radius as unknown as RangeSliderValue
+  );
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      const border = DATA_BORDER_TYPE.find((item) => item.title === value);
+      if (border) {
+        setInputBorderType(border.title);
+        dispatch(updateCustomize({ input_border: border.value }));
+      }
+    },
+    [dispatch]
+  );
+  const handleSelectChangeTypeBtn = useCallback(
+    (value: string) => {
+      const buttonType = DATA_BUTTON_TYPE.find((item) => item.title === value);
+      if (buttonType) {
+        setBtnType(buttonType.title);
+        dispatch(updateCustomize({ button_variant: buttonType.value }));
+      }
+    },
+    [dispatch]
+  );
+  const handleChangeLayout = useCallback(
+    (_: boolean, newValue: string) => {
+      console.log(newValue);
+      setLayout(newValue);
+      dispatch(updateCustomize({ direction: newValue }));
+    },
+    [dispatch]
+  );
+
+  const handleSelectChangeBtnBorder = useCallback(
+    (value: string) => {
+      const border = DATA_BORDER_TYPE.find((item) => item.title === value);
+      if (border) {
+        setBtnBorderType(border.title);
+        dispatch(updateCustomize({ button_border: border.value }));
+      }
+    },
+    [dispatch]
+  );
   return (
     <Box width="410px" paddingBlockEnd="300" background="bg-fill-active">
       {/* Discount box size */}
@@ -41,18 +90,23 @@ export default function SideBar() {
         >
           <Select
             label="Border style"
-            options={options}
+            options={DATA_BORDER_TYPE.map((item) => item.title)}
             onChange={handleSelectChange}
-            value={selected}
+            value={inputBorderType}
           />
         </div>
         <RangeSlider
           output
           label="Border radius"
           min={0}
-          max={1}
-          value={0.7}
-          onChange={() => {}}
+          max={10}
+          value={inputBorderRadius}
+          onChange={(e) => {
+            setInputBorderRadius(e);
+            dispatch(
+              updateCustomize({ input_border_radius: inputBorderRadius })
+            );
+          }}
           suffix={
             <p
               style={{
@@ -60,7 +114,7 @@ export default function SideBar() {
                 textAlign: "right",
               }}
             >
-              1px
+              10px
             </p>
           }
         />
@@ -76,9 +130,9 @@ export default function SideBar() {
       <Property title="Button">
         <Select
           label="Button type"
-          options={options}
-          onChange={handleSelectChange}
-          value={selected}
+          options={DATA_BUTTON_TYPE.map((item) => item.title)}
+          onChange={handleSelectChangeTypeBtn}
+          value={btnType}
         />
         <div style={{ marginTop: "16px" }}>
           <InlineStack wrap={false} align="center" gap="400">
@@ -93,15 +147,23 @@ export default function SideBar() {
             margin: "16px 0",
           }}
         >
-          <TextField label="Border style" value="Dotted" autoComplete="off" />
+          <Select
+            label="Border style"
+            options={DATA_BORDER_TYPE.map((item) => item.title)}
+            onChange={handleSelectChangeBtnBorder}
+            value={btnBorderType}
+          />
         </div>
         <RangeSlider
           output
-          label="Border radius"
+          label="Border width"
           min={0}
-          max={1}
-          value={0.7}
-          onChange={() => {}}
+          max={10}
+          value={buttonBorderWidth}
+          onChange={(e) => {
+            setButtonBorderWidth(e);
+            dispatch(updateCustomize({ border_width: buttonBorderWidth }));
+          }}
           suffix={
             <p
               style={{
@@ -109,7 +171,7 @@ export default function SideBar() {
                 textAlign: "right",
               }}
             >
-              1px
+              10px
             </p>
           }
         />
@@ -121,15 +183,17 @@ export default function SideBar() {
         <BlockStack align="start">
           <RadioButton
             label="Vertical"
-            checked={false}
-            id="disabled"
-            name="accounts"
+            checked={layout === "vertical"}
+            id="vertical"
+            name="vertical"
+            onChange={handleChangeLayout}
           />
           <RadioButton
             label="Horizontal"
-            checked={false}
-            id="disabled"
-            name="accounts"
+            checked={layout === "horizontal"}
+            id="horizontal"
+            name="horizontal"
+            onChange={handleChangeLayout}
           />
         </BlockStack>
       </Property>

@@ -5,12 +5,10 @@ import DotAction from "../DotAction";
 type TranslationItem = {
   translationTitle: string;
   defaultTranslation?: boolean;
-  id: number;
-  handleDelete: (id: number) => void;
+  handleDelete: (locale: string) => void;
 };
 export default function TranslationItem({
   translationTitle,
-  id,
   defaultTranslation,
   handleDelete,
 }: TranslationItem) {
@@ -24,11 +22,14 @@ export default function TranslationItem({
           {defaultTranslation && <Badge>Default</Badge>}
         </InlineStack>
         {defaultTranslation ? (
-          <Link to={`/translation/edit/${id}`}>
+          <Link to={`/translation/edit/${translationTitle}`}>
             <Button variant="plain">Edit</Button>
           </Link>
         ) : (
-          <DotAction id={id} onDeleteTranslation={handleDelete} />
+          <DotAction
+            locale={translationTitle}
+            onDeleteTranslation={handleDelete}
+          />
         )}
       </InlineStack>
     </div>

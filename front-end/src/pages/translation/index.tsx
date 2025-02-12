@@ -10,16 +10,23 @@ import {
 } from "@shopify/polaris";
 import { PlusIcon } from "@shopify/polaris-icons";
 import { useCallback, useEffect, useState } from "react";
+import translationApi from "../../api/translationApi";
 import TranslationItem from "../../components/TranslationItem";
-import DATA_TRANSLATIONS from "../../constants";
 import ITranslation from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../stores";
+
 export default function Translation() {
   const [activeModal, setActiveModal] = useState(false);
   const [dataTranslation, setDataTranslation] = useState<ITranslation[]>([]);
   const [translation, setTranslation] = useState("");
-
+  const shopId = useSelector((state: RootState) => state.shop.id);
   useEffect(() => {
-    setDataTranslation(DATA_TRANSLATIONS);
+    const fetchGetDataTranslation = async () => {
+      const result = await translationApi.getAll();
+      setDataTranslation(result.data);
+    };
+    fetchGetDataTranslation();
   }, []);
 
   const handleChangeModal = useCallback(() => {
@@ -30,27 +37,25 @@ export default function Translation() {
     (value: string) => setTranslation(value),
     []
   );
-  const handleAddTranslation = () => {
-    setDataTranslation((prev) => {
-      return [
-        ...prev,
-        {
-          id: Math.round(Math.random() * 100),
-          locale: translation,
-          translate: {
-            button_text: "",
-            placeholder_text: "",
-          },
-        },
-      ];
+  const handleAddTranslation = async () => {
+    const response = await translationApi.add({
+      shop_id: shopId,
+      locale: translation,
+      translate: {
+        button_text: "",
+        placeholder_text: "",
+      },
     });
+    setDataTranslation((prev) => [...prev, response.data]);
+
     handleChangeModal();
   };
-  const handleDeleteTranslation = (id: number) => {
+  const handleDeleteTranslation = async (locale: string) => {
     const newTranslationData = dataTranslation.filter(
-      (item: ITranslation) => item.id !== id
+      (item: ITranslation) => item.locale !== locale
     );
     setDataTranslation(newTranslationData);
+    await translationApi.delete(locale);
   };
   return (
     <>
@@ -79,7 +84,6 @@ export default function Translation() {
                             <TranslationItem
                               handleDelete={handleDeleteTranslation}
                               key={item.id}
-                              id={item.id}
                               defaultTranslation={index === 0}
                               translationTitle={item.locale}
                             />

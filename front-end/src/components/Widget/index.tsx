@@ -10,9 +10,14 @@ import { DesktopIcon, MobileIcon } from "@shopify/polaris-icons";
 import { useCallback, useState } from "react";
 import SkeletonText from "../SkeletonText";
 import SkeletonThumb from "../SkeletonThumb";
+import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "../../stores";
 export default function Widget() {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
-  // const count = useSelector((state: RootState) => state.test.value);
+  const styles = useSelector(
+    (state: RootState) => state.customize.style,
+    shallowEqual
+  );
 
   const handleButtonClick = useCallback(
     (index: number) => {
@@ -75,14 +80,58 @@ export default function Widget() {
           </InlineStack>
           <Divider />
           <BlockStack inlineAlign="end" gap="1000">
-            <InlineStack gap="200" align="center">
-              <input
-                type="text"
-                placeholder="Label"
-                className="input-discount"
-              />
-              <button className="btn-discount">Label</button>
-            </InlineStack>
+            {styles.direction === "horizontal" ? (
+              <InlineStack gap="200" align="center">
+                <input
+                  type="text"
+                  placeholder="Label"
+                  className="input-discount"
+                  style={{
+                    width: `${styles.input_width}px`,
+                    height: `${styles.input_height}px`,
+                    borderStyle: `${styles.input_border}`,
+                    borderRadius: `${styles.input_border_radius}px`,
+                  }}
+                />
+                <button
+                  style={{
+                    borderWidth: `${styles.border_width}px`,
+                    borderStyle: `${styles.button_border}`,
+                    width: `${styles.button_height}px`,
+                    height: `${styles.button_width}px`,
+                  }}
+                  className="btn-discount"
+                >
+                  Label
+                </button>
+              </InlineStack>
+            ) : (
+              <BlockStack gap="200" align="center">
+                <input
+                  type="text"
+                  placeholder="Label"
+                  className="input-discount"
+                  style={{
+                    width: `${styles.input_width}px`,
+                    height: `${styles.input_height}px`,
+                    borderStyle: `${styles.input_border}`,
+                    borderRadius: `${styles.input_border_radius}px`,
+                  }}
+                />
+                <button
+                  style={{
+                    borderWidth: `${styles.border_width}px`,
+                    borderStyle: `${styles.button_border}`,
+                    width: `${styles.button_height}px`,
+                    height: `${styles.button_width}px`,
+                  }}
+                  className="btn-discount"
+                >
+                  Label
+                </button>
+              </BlockStack>
+            )}
+
             <SkeletonText radius="0" height="52.39px" width="40%" />
           </BlockStack>
         </BlockStack>

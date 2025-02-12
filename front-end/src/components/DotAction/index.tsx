@@ -1,22 +1,23 @@
 import { ActionList, Icon, Modal, Popover } from "@shopify/polaris";
 import { MenuHorizontalIcon } from "@shopify/polaris-icons";
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type DotAction = {
-  onDeleteTranslation: (id: number) => void;
-  id: number;
+  onDeleteTranslation: (locale: string) => void;
+  locale: string;
 };
-export default function DotAction({ onDeleteTranslation, id }: DotAction) {
+export default function DotAction({ onDeleteTranslation, locale }: DotAction) {
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
   const [activeModal, setActiveModal] = useState(false);
-
+  const navigation = useNavigate();
   const toggleModal = useCallback(
     () => setActiveModal((active) => !active),
     []
   );
   const handleClickDelete = () => {
-    onDeleteTranslation(id);
+    onDeleteTranslation(locale);
   };
   const activator = (
     <div style={{ padding: "4px" }} onClick={toggleActive}>
@@ -24,6 +25,9 @@ export default function DotAction({ onDeleteTranslation, id }: DotAction) {
     </div>
   );
 
+  const navigateToEditPage = () => {
+    navigation(`/translation/edit/${locale}`);
+  };
   return (
     <div>
       <Popover
@@ -35,7 +39,7 @@ export default function DotAction({ onDeleteTranslation, id }: DotAction) {
         <ActionList
           actionRole="menuitem"
           items={[
-            { content: "Edit" },
+            { content: "Edit", onAction: navigateToEditPage },
             {
               content: "Delete",
               destructive: true,

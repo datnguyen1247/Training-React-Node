@@ -14,7 +14,7 @@ export default function TextFieldNumber({ label, type }: TextFieldNumber) {
     <TextField
       label={label}
       onChange={(e) => {
-        dispatch(updateCustomize({ input_height: e }));
+        dispatch(updateCustomize({ [type]: e }));
       }}
       type="number"
       value={inputHeight}

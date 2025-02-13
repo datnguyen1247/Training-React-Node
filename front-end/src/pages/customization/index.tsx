@@ -1,7 +1,14 @@
-import { lazy } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { lazy, useEffect } from "react";
 import HomeContent from "../../components/HomeContent";
+import { useDispatch } from "react-redux";
+import { fetchDataCustomize } from "../../slices/customizeSlice";
 const TitleBar = lazy(() => import("../../components/TitleBar"));
 export default function CustomizationPage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchDataCustomize() as any);
+  }, []);
   return (
     <div>
       <TitleBar />

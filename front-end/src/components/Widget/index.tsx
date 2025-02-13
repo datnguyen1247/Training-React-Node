@@ -18,7 +18,29 @@ export default function Widget() {
     (state: RootState) => state.customize.style,
     shallowEqual
   );
-
+  const {
+    input_width,
+    input_height,
+    input_border,
+    input_border_radius,
+    border_width,
+    button_border,
+    button_height,
+    button_width,
+    button_variant,
+  } = styles;
+  const styleInput = {
+    width: `${input_width}px`,
+    height: `${input_height}px`,
+    borderStyle: `${input_border}`,
+    borderRadius: `${input_border_radius}px`,
+  };
+  const styleButton = {
+    borderWidth: `${border_width}px`,
+    borderStyle: `${button_border}`,
+    width: `${button_width}px`,
+    height: `${button_height}px`,
+  };
   const handleButtonClick = useCallback(
     (index: number) => {
       if (activeButtonIndex === index) return;
@@ -87,22 +109,16 @@ export default function Widget() {
                   placeholder="Label"
                   className="input-discount"
                   style={{
-                    width: `${styles.input_width}px`,
-                    height: `${styles.input_height}px`,
-                    borderStyle: `${styles.input_border}`,
-                    borderRadius: `${styles.input_border_radius}px`,
+                    ...styleInput,
                   }}
                 />
                 <button
                   style={{
-                    borderWidth: `${styles.border_width}px`,
-                    borderStyle: `${styles.button_border}`,
-                    width: `${styles.button_height}px`,
-                    height: `${styles.button_width}px`,
+                    ...styleButton,
                   }}
                   className="btn-discount"
                 >
-                  Label
+                  Label {button_variant}
                 </button>
               </InlineStack>
             ) : (
@@ -112,22 +128,16 @@ export default function Widget() {
                   placeholder="Label"
                   className="input-discount"
                   style={{
-                    width: `${styles.input_width}px`,
-                    height: `${styles.input_height}px`,
-                    borderStyle: `${styles.input_border}`,
-                    borderRadius: `${styles.input_border_radius}px`,
+                    ...styleInput,
                   }}
                 />
                 <button
                   style={{
-                    borderWidth: `${styles.border_width}px`,
-                    borderStyle: `${styles.button_border}`,
-                    width: `${styles.button_height}px`,
-                    height: `${styles.button_width}px`,
+                    ...styleButton,
                   }}
                   className="btn-discount"
                 >
-                  Label
+                  Label {button_variant}
                 </button>
               </BlockStack>
             )}

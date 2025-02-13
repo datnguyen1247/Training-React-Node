@@ -10,7 +10,7 @@ import {
 import CircleBorder from "../CircleBorder";
 import Property from "../Property";
 import TextFieldNumber from "../TextFieldNumber";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { updateCustomize } from "../../slices/customizeSlice";
 import { RootState } from "../../stores";
@@ -22,16 +22,27 @@ export default function SideBar() {
     (state: RootState) => state.customize.style,
     shallowEqual
   );
-  const [inputBorderType, setInputBorderType] = useState("Dotted");
-  const [btnBorderType, setBtnBorderType] = useState("Dotted");
-  const [btnType, setBtnType] = useState("Plain");
+  const [inputBorderType, setInputBorderType] = useState(styles.input_border);
+  const [btnBorderType, setBtnBorderType] = useState(styles.button_border);
+  const [btnType, setBtnType] = useState(styles.button_variant);
+
   const [layout, setLayout] = useState(styles.direction);
+  const [cssCustom, setCssCustom] = useState(styles.css);
   const [inputBorderRadius, setInputBorderRadius] = useState<RangeSliderValue>(
     () => styles.input_border_radius as unknown as RangeSliderValue
   );
   const [buttonBorderWidth, setButtonBorderWidth] = useState<RangeSliderValue>(
     () => styles.input_border_radius as unknown as RangeSliderValue
   );
+  useEffect(() => {
+    setInputBorderType(styles.input_border);
+    setBtnBorderType(styles.button_border);
+    setInputBorderRadius(styles.input_border_radius);
+    setButtonBorderWidth(styles.border_width);
+    setBtnType(styles.button_variant);
+    setLayout(styles.direction);
+    setCssCustom(styles.css);
+  }, [styles]);
   const handleSelectChange = useCallback(
     (value: string) => {
       const border = DATA_BORDER_TYPE.find((item) => item.title === value);
@@ -92,7 +103,9 @@ export default function SideBar() {
             label="Border style"
             options={DATA_BORDER_TYPE.map((item) => item.title)}
             onChange={handleSelectChange}
-            value={inputBorderType}
+            value={
+              inputBorderType.charAt(0).toUpperCase() + inputBorderType.slice(1)
+            }
           />
         </div>
         <RangeSlider
@@ -103,9 +116,7 @@ export default function SideBar() {
           value={inputBorderRadius}
           onChange={(e) => {
             setInputBorderRadius(e);
-            dispatch(
-              updateCustomize({ input_border_radius: inputBorderRadius })
-            );
+            dispatch(updateCustomize({ input_border_radius: e }));
           }}
           suffix={
             <p
@@ -132,7 +143,7 @@ export default function SideBar() {
           label="Button type"
           options={DATA_BUTTON_TYPE.map((item) => item.title)}
           onChange={handleSelectChangeTypeBtn}
-          value={btnType}
+          value={btnType.charAt(0).toUpperCase() + btnType.slice(1)}
         />
         <div style={{ marginTop: "16px" }}>
           <InlineStack wrap={false} align="center" gap="400">
@@ -151,7 +162,9 @@ export default function SideBar() {
             label="Border style"
             options={DATA_BORDER_TYPE.map((item) => item.title)}
             onChange={handleSelectChangeBtnBorder}
-            value={btnBorderType}
+            value={
+              btnBorderType.charAt(0).toUpperCase() + btnBorderType.slice(1)
+            }
           />
         </div>
         <RangeSlider
@@ -162,7 +175,7 @@ export default function SideBar() {
           value={buttonBorderWidth}
           onChange={(e) => {
             setButtonBorderWidth(e);
-            dispatch(updateCustomize({ border_width: buttonBorderWidth }));
+            dispatch(updateCustomize({ border_width: e }));
           }}
           suffix={
             <p
@@ -202,9 +215,12 @@ export default function SideBar() {
       <Property title="Custom CSS">
         <div style={{ width: "100%" }}>
           <TextField
-            value="Value"
+            value={cssCustom}
             label=""
-            onChange={() => {}}
+            onChange={(e) => {
+              setCssCustom(e);
+              dispatch(updateCustomize({ css: e }));
+            }}
             multiline={4}
             autoComplete="off"
           />

@@ -83,7 +83,17 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE
       }
-    })
+    }).then(() => {
+      queryInterface.addConstraint('Customizations', {
+          fields: ['shop_id'],
+          type: 'foreign key',
+          name: 'customizations_shop_fk',
+          references: {
+              table: 'Shops',
+              field: 'id',
+          },
+      });
+  })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Customizations');

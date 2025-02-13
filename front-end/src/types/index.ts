@@ -12,8 +12,34 @@ export interface ITranslationResponse{
         message: string,
         data: ITranslation
 }
+
 export interface ICount{
     value:number
+}
+
+export interface ICustomizeStyle{
+    style:ICustomize
+}
+
+export interface ICustomize{
+    input_width:number,
+    input_height:number,
+    input_border:string,
+    input_border_radius:number,
+    input_background_color:string,
+    button_variant:string,
+    border_width:number,
+    border_color:string,
+    button_width:number,
+    button_height:number,
+    button_border:string,
+    button_background_color:string,
+    button_text_color:string,
+    direction:string,
+    shop_id?: number,
+    createdAt?: string,
+    updatedAt?: string,
+    css:string
 }
 
 export interface IResponseLogin{

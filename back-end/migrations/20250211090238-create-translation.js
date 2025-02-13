@@ -32,7 +32,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }).then(() => {
+      queryInterface.addConstraint('Translations', {
+          fields: ['shop_id'],
+          type: 'foreign key',
+          name: 'translations_shop_fk',
+          references: {
+              table: 'Shops',
+              field: 'id',
+          },
+      });
+  })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Translations');

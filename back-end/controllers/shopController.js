@@ -14,6 +14,19 @@ const get = async (req, res, next) => {
     }
 };
 
+const getAll = async (req, res, next) => {
+    try {
+        const shop = await shopService.getAll();
+        console.log(shop)
+        res.status(StatusCodes.OK).json({
+            statusCode: StatusCodes.OK,
+            message: StatusCodes[StatusCodes.OK],
+            data: shop,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 const add = async (req, res, next) => {
     try {
         const shop = await shopService.add(req.body);
@@ -26,4 +39,4 @@ const add = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = {get,add}
+module.exports = {get,add,getAll}

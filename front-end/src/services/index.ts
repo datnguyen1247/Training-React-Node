@@ -7,8 +7,8 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
     function (config) {
-        const token = JSON.parse(localStorage.getItem('token') || '')
-        if(token){
+        if(localStorage.getItem('token')){
+            const token = JSON.parse(localStorage.getItem('token') || '')
             config.headers.Authorization = `Bearer ${token}`
         }
         
@@ -18,6 +18,7 @@ axiosClient.interceptors.request.use(
         return Promise.reject(error);
     },
 );
+
 axiosClient.interceptors.response.use(
     function (response) {
         return response.data;

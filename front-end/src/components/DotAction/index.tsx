@@ -53,7 +53,7 @@ export default function DotAction({ onDeleteTranslation, locale }: DotAction) {
           activator={activator}
           open={activeModal}
           onClose={toggleModal}
-          title="Remove 1 language?"
+          title="Remove 1 translation?"
           primaryAction={{
             destructive: true,
             content: "Delete",

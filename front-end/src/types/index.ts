@@ -1,8 +1,8 @@
 interface ITranslation{
     id?:number,
     shop_id?:number,
-    locale: string,
-    translate : {
+    locale?: string,
+    translate ?: {
         placeholder_text: string,
         button_text:string
     }

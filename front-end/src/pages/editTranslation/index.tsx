@@ -42,7 +42,8 @@ export default function EditTranslation() {
   const handelClickSave = async () => {
     console.log(activeToast);
     const dataUpdate = { ...transition, translate: translate };
-    await translationApi.update(dataUpdate);
+    console.log(dataUpdate);
+    await translationApi.save(dataUpdate);
     toggleActiveToast();
   };
   return (

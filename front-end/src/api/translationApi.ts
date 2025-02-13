@@ -11,12 +11,10 @@ const translationApi = {
     async getOne(locale:string): Promise<{data:ITranslation}> {
         return await axiosClient.get(`/translation/${locale}`);
     },
-    async add(data:ITranslation): Promise<ITranslationResponse> {
+    async save(data:ITranslation): Promise<ITranslationResponse> {
         return await axiosClient.post('/translation',data);
     },
-    async update(data:any): Promise<any> {
-        return await axiosClient.post(`/translation/${data.id}`,data);
-    },
+    
     async delete(locale:string): Promise<any> {
         return await axiosClient.delete(`/translation/${locale}`);
     },

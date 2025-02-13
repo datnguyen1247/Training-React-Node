@@ -5,7 +5,8 @@ import { ICustomizeStyle } from '../types';
 
 
 export const fetchDataCustomize = createAsyncThunk('customize/fetchData', async () => {
-  const response = await shopApi.getOne();
+  const FAKE_SHOP_ID = 1
+  const response = await shopApi.getOne(FAKE_SHOP_ID);
   return response.data;
 });
 

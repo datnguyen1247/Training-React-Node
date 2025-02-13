@@ -78,7 +78,7 @@ export default function Widget() {
           </Text>
           <InlineStack gap="500">
             <InlineStack>
-              <SkeletonThumb />
+              <SkeletonThumb width="123.89px" height="123.89px" />
             </InlineStack>
 
             <div style={{ flex: 1 }}>
@@ -90,7 +90,7 @@ export default function Widget() {
           </InlineStack>
           <InlineStack gap="500">
             <InlineStack>
-              <SkeletonThumb />
+              <SkeletonThumb width="123.89px" height="123.89px" />
             </InlineStack>
 
             <div style={{ flex: 1 }}>

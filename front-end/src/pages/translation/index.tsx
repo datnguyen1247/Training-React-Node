@@ -83,7 +83,6 @@ export default function Translation() {
                           <Box key={item.id}>
                             <TranslationItem
                               handleDelete={handleDeleteTranslation}
-                              key={item.id}
                               defaultTranslation={index === 0}
                               translationTitle={item.locale}
                             />

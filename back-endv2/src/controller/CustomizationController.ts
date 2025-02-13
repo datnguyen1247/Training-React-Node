@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
 import { Customization } from "../entity/Customization"
+import { StatusCodes } from "http-status-codes";
 
 export class CustomizationController {
 
@@ -19,7 +20,11 @@ export class CustomizationController {
             }
             customization.shop = data.shop_id;
             await this.customizationRepository.save(customization);
-            return response.status(200).json(customization);
+            return {
+                statusCode: StatusCodes.OK,
+                message: StatusCodes[StatusCodes.OK],
+                data: customization,
+            };
         } catch (error) {
             next(error);
         }

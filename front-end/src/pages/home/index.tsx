@@ -54,8 +54,12 @@ export default function HomePage() {
         <Button onClick={handleLogin}>Login</Button>
         {isShowLink && (
           <>
-            <Link to="/customization">customization</Link>
-            <Link to="/translation">translation</Link>
+            <div>
+              <Link to="/customization">customization</Link>
+            </div>
+            <div>
+              <Link to="/translation">translation</Link>
+            </div>
           </>
         )}
       </FormLayout>

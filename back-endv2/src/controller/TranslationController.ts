@@ -50,6 +50,10 @@ export class TranslationController {
         translation =  Object.assign(translation, data);
       } else {
         translation =  Object.assign(new Translation(), data);
+        translation.translate = {
+          button_text:'Apply',
+          placeholder_text:'Discount code'
+        }
       }
       translation.shopify_domain = request.headers.shopify_domain;
       const result = await  this.translationRepository.save(translation);

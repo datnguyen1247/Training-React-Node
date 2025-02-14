@@ -10,7 +10,7 @@ export default function TitleBar() {
   const [activeToast, setActiveToast] = useState(false);
 
   const handleSave = async () => {
-    await customizationApi.save({ ...styles, shop_id: 1 });
+    await customizationApi.save({ ...styles });
     toggleActiveToast();
   };
 

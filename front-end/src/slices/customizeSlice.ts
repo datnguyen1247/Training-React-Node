@@ -1,35 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import shopApi from '../api/shopApi';
+import customizationApi from '../api/customizationApi';
 import { ICustomizeStyle } from '../types';
+import { DEFAULT_CUSTOMIZE } from '../constants';
 
 
 export const fetchDataCustomize = createAsyncThunk('customize/fetchData', async () => {
-  const FAKE_SHOP_ID = 1
-  const response = await shopApi.getOne(FAKE_SHOP_ID);
+  const response = await customizationApi.get();
   return response.data;
 });
 
 
 
 const initialState: ICustomizeStyle = {
-  style:  {
-    input_width: 0,
-    input_height: 0,
-    input_border: '',
-    input_border_radius: 0,
-    input_background_color: '',
-    button_variant: '',
-    border_width: 0,
-    border_color: '',
-    button_width: 0,
-    button_height: 0,
-    button_border: '',
-    button_background_color: '',
-    button_text_color: '',
-    direction: '',
-    css:''
-  },
+  style:  DEFAULT_CUSTOMIZE,
 }
 
 const customizeSlice = createSlice({
@@ -43,7 +27,9 @@ const customizeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDataCustomize.fulfilled, (state, action:any) => {
-      state.style = action.payload.customization
+      console.log(action.payload)
+     
+       state.style = action.payload || DEFAULT_CUSTOMIZE
     })
   },
 })

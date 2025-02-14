@@ -83,4 +83,22 @@ export const DATA_BUTTON_TYPE = [
     },
 
 ]
+
+export const DEFAULT_CUSTOMIZE ={
+  input_width: 333,
+  input_height: 52,
+  input_border: 'dashed',
+  input_border_radius: 0,
+  input_background_color: '',
+  button_variant: 'plain',
+  border_width: 0,
+  border_color: '',
+  button_width: 57,
+  button_height: 39,
+  button_border: 'dotted',
+  button_background_color: '',
+  button_text_color: '',
+  direction: 'horizontal',
+  css:''
+}
 export default DATA_TRANSLATIONS;

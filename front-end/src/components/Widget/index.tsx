@@ -28,18 +28,26 @@ export default function Widget() {
     button_height,
     button_width,
     button_variant,
+    input_background_color,
+    button_background_color,
+    border_color,
+    button_text_color,
   } = styles;
   const styleInput = {
     width: `${input_width}px`,
     height: `${input_height}px`,
     borderStyle: `${input_border}`,
     borderRadius: `${input_border_radius}px`,
+    backgroundColor: input_background_color,
   };
   const styleButton = {
     borderWidth: `${border_width}px`,
     borderStyle: `${button_border}`,
     width: `${button_width}px`,
     height: `${button_height}px`,
+    backgroundColor: button_background_color,
+    color: button_text_color,
+    borderColor: border_color,
   };
   const handleButtonClick = useCallback(
     (index: number) => {
@@ -118,7 +126,7 @@ export default function Widget() {
                   }}
                   className="btn-discount"
                 >
-                  Label {button_variant}
+                  {button_variant}
                 </button>
               </InlineStack>
             ) : (
@@ -137,7 +145,7 @@ export default function Widget() {
                   }}
                   className="btn-discount"
                 >
-                  Label {button_variant}
+                  {button_variant}
                 </button>
               </BlockStack>
             )}

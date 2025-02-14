@@ -1,6 +1,6 @@
 interface ITranslation{
     id?:number,
-    shop_id?:number,
+    shopify_domain?:string,
     locale?: string,
     translate ?: {
         placeholder_text: string,

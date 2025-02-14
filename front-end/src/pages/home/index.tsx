@@ -1,59 +1,64 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ContextualSaveBar, Frame, Navigation } from "@shopify/polaris";
-import { HomeIcon, OrderIcon } from "@shopify/polaris-icons";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Button, FormLayout, TextField } from "@shopify/polaris";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import shopApi from "../../api/shopApi";
 import authApi from "../../api/authApi";
-import { RootState } from "../../stores";
-
+import { useDispatch } from "react-redux";
+import { updateShopData } from "../../slices/shopSlice";
 export default function HomePage() {
-  const shop = useSelector((state: RootState) => state.shop);
-
-  useEffect(() => {
-    const fetchApi = async () => {
-      const response = await authApi.fakeLogin();
-      localStorage.setItem("token", JSON.stringify(response.token));
-    };
-    fetchApi();
-  }, []);
-
+  const [shopifyDomain, setShopifyDomain] = useState("dat-nt2.myshopify.com");
+  const [shopOwner, setShopOwner] = useState("Dat NT2");
+  const [isShowLink, setIsShowLink] = useState(false);
+  const dispatch = useDispatch();
+  const handleLogin = async () => {
+    const response = await shopApi.save({
+      shopify_domain: shopifyDomain,
+      shop_owner: shopOwner,
+    });
+    if (response) {
+      dispatch(updateShopData(response.data));
+      setIsShowLink(true);
+      const fetchToken = async () => {
+        const results = await authApi.fakeLogin({
+          shopify_domain: shopifyDomain,
+          shop_owner: shopOwner,
+        });
+        if (results) {
+          localStorage.setItem("token", JSON.stringify(results.token));
+          localStorage.setItem("shop", JSON.stringify(response.data));
+        }
+      };
+      fetchToken();
+    }
+  };
   return (
     <div>
-      {/* <Link to="/customization">customization</Link> */}
-      <div style={{ height: "56px" }}>
-        <Frame
-          logo={{
-            width: 86,
-            contextualSaveBarSource:
-              "https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png",
+      <FormLayout>
+        <TextField
+          label="Shopify Domain"
+          value={shopifyDomain}
+          onChange={(e) => {
+            setShopifyDomain(e);
           }}
-        >
-          <ContextualSaveBar
-            message={shop.shop_owner + " " + shop.shopify_domain}
-          />
-        </Frame>
-      </div>
-      {/* <Link to="/customization">customization</Link> */}
-      <Frame>
-        <Navigation location="/">
-          <Navigation.Section
-            items={[
-              {
-                url: "/customization",
-                excludePaths: ["customization"],
-                label: "Customization",
-                icon: HomeIcon,
-              },
-              {
-                url: "/translation",
-                excludePaths: ["translation"],
-                label: "Translation",
-                icon: OrderIcon,
-              },
-            ]}
-          />
-        </Navigation>
-      </Frame>
+          autoComplete="off"
+        />
+        <TextField
+          type="text"
+          label="Shop owner"
+          value={shopOwner}
+          onChange={(e) => {
+            setShopOwner(e);
+          }}
+          autoComplete="text"
+        />
+        <Button onClick={handleLogin}>Login</Button>
+        {isShowLink && (
+          <>
+            <Link to="/customization">customization</Link>
+            <Link to="/translation">translation</Link>
+          </>
+        )}
+      </FormLayout>
     </div>
   );
 }

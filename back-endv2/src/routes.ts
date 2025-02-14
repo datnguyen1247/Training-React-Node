@@ -12,7 +12,7 @@ export const Routes = [
   },
   {
     method: "get",
-    route: "/shop/:id",
+    route: "/shop/",
     controller: ShopController,
     action: "one",
   },
@@ -24,7 +24,7 @@ export const Routes = [
   },
   //FAKE LOGIN
   {
-    method: "get",
+    method: "post",
     route: "/login",
     controller: ShopController,
     action: "fakeLogin",
@@ -35,6 +35,12 @@ export const Routes = [
     route: "/customization",
     controller: CustomizationController,
     action: "save",
+  },
+  {
+    method: "get",
+    route: "/customization",
+    controller: CustomizationController,
+    action: "one",
   },
   //Translation
   {

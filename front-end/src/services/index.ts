@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import axios from 'axios';
 
 const axiosClient = axios.create({
@@ -11,7 +12,10 @@ axiosClient.interceptors.request.use(
             const token = JSON.parse(localStorage.getItem('token') || '')
             config.headers.Authorization = `Bearer ${token}`
         }
-        
+        if(localStorage.getItem('shop')){
+            const shop = JSON.parse(localStorage.getItem('shop') || '')
+            config.headers.shopify_domain = shop.shopify_domain
+        }
         return config;
     },
     function (error) {

@@ -5,8 +5,6 @@ import { Request, Response } from "express"
 import { AppDataSource } from "./data-source"
 import { Routes } from "./routes"
 import { errorHandler } from "./middlewares/error.middleware"
-
-
 AppDataSource.initialize().then(async () => {
 
     // create express app
@@ -15,7 +13,6 @@ AppDataSource.initialize().then(async () => {
     app.use(bodyParser.json())
     app.use(express.json());
     app.use(errorHandler);
-
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {

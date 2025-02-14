@@ -7,11 +7,11 @@ export class TranslationController {
   private translationRepository = AppDataSource.getRepository(Translation);
 
   async all(request: Request, response: Response, next: NextFunction) {
-    const { shopId = 1 } = request.params;
+    const { shopDomain } = request.headers;
 
     const data = await this.translationRepository.find({
       where: {
-        shop: shopId,
+        shopify_domain: shopDomain,
       },
     });
     return {
@@ -51,7 +51,7 @@ export class TranslationController {
       } else {
         translation =  Object.assign(new Translation(), data);
       }
-      translation.shop = data.shop_id;
+      translation.shopify_domain = request.headers.shopify_domain;
       const result = await  this.translationRepository.save(translation);
       return {
         statusCode: StatusCodes.CREATED,

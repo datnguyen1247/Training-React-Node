@@ -63,7 +63,7 @@ export class Customization {
   @Column({ type: "text" })
   css: string;
 
-  @OneToOne(() => Shop, (shop) => shop.customization)
-  @JoinColumn()
-  shop: Shop;
+  @OneToOne(() => Shop, (shopify_domain ) => shopify_domain .customization)
+  @JoinColumn({name:"shopify_domain"})
+  shopify_domain : Shop;
 }

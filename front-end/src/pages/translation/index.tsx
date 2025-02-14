@@ -13,14 +13,11 @@ import { useCallback, useEffect, useState } from "react";
 import translationApi from "../../api/translationApi";
 import TranslationItem from "../../components/TranslationItem";
 import ITranslation from "../../types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../stores";
 
 export default function Translation() {
   const [activeModal, setActiveModal] = useState(false);
   const [dataTranslation, setDataTranslation] = useState<ITranslation[]>([]);
   const [translation, setTranslation] = useState("");
-  const shopId = useSelector((state: RootState) => state.shop.id);
   useEffect(() => {
     const fetchGetDataTranslation = async () => {
       const result = await translationApi.getAll();
@@ -38,8 +35,7 @@ export default function Translation() {
     []
   );
   const handleAddTranslation = async () => {
-    const response = await translationApi.add({
-      shop_id: shopId,
+    const response = await translationApi.save({
       locale: translation,
       translate: {
         button_text: "",
@@ -84,7 +80,7 @@ export default function Translation() {
                             <TranslationItem
                               handleDelete={handleDeleteTranslation}
                               defaultTranslation={index === 0}
-                              translationTitle={item.locale}
+                              translationTitle={item.locale || ""}
                             />
                             {index !== dataTranslation.length - 1 && (
                               <div

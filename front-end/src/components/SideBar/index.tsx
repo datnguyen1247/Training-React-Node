@@ -7,15 +7,16 @@ import {
   Select,
   TextField,
 } from "@shopify/polaris";
+import { RangeSliderValue } from "@shopify/polaris/build/ts/src/components/RangeSlider/types";
+import { useCallback, useEffect, useState } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { DATA_BORDER_TYPE, DATA_BUTTON_TYPE } from "../../constants";
+import { updateCustomize } from "../../slices/customizeSlice";
+import { RootState } from "../../stores";
 import CircleBorder from "../CircleBorder";
 import Property from "../Property";
 import TextFieldNumber from "../TextFieldNumber";
-import { useCallback, useEffect, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { updateCustomize } from "../../slices/customizeSlice";
-import { RootState } from "../../stores";
-import { RangeSliderValue } from "@shopify/polaris/build/ts/src/components/RangeSlider/types";
-import { DATA_BORDER_TYPE, DATA_BUTTON_TYPE } from "../../constants";
+
 export default function SideBar() {
   const dispatch = useDispatch();
   const styles = useSelector(
@@ -25,7 +26,6 @@ export default function SideBar() {
   const [inputBorderType, setInputBorderType] = useState(styles.input_border);
   const [btnBorderType, setBtnBorderType] = useState(styles.button_border);
   const [btnType, setBtnType] = useState(styles.button_variant);
-
   const [layout, setLayout] = useState(styles.direction);
   const [cssCustom, setCssCustom] = useState(styles.css);
   const [inputBorderRadius, setInputBorderRadius] = useState<RangeSliderValue>(
@@ -34,6 +34,7 @@ export default function SideBar() {
   const [buttonBorderWidth, setButtonBorderWidth] = useState<RangeSliderValue>(
     () => styles.input_border_radius as unknown as RangeSliderValue
   );
+
   useEffect(() => {
     setInputBorderType(styles.input_border);
     setBtnBorderType(styles.button_border);
@@ -93,7 +94,7 @@ export default function SideBar() {
       </Property>
       {/* Discount box border */}
       <Property title="Discount box border">
-        <CircleBorder title="Border color" />
+        {/* <CircleBorder title="Border color" /> */}
         <div
           style={{
             margin: "16px 0",
@@ -133,7 +134,10 @@ export default function SideBar() {
 
       {/* Discount box color */}
       <Property title="Discount box color">
-        <CircleBorder title="Discount box color" />
+        <CircleBorder
+          type="input_background_color"
+          title="Discount box color"
+        />
       </Property>
 
       {/* Button */}
@@ -151,8 +155,16 @@ export default function SideBar() {
             <TextFieldNumber type="button_height" label="Button height" />
           </InlineStack>
         </div>
-        <CircleBorder className={{ marginTop: "16px" }} title="Button color" />
-        <CircleBorder className={{ marginTop: "16px" }} title="Text color" />
+        <CircleBorder
+          type="button_background_color"
+          className={{ marginTop: "16px" }}
+          title="Button color"
+        />
+        <CircleBorder
+          type="button_text_color"
+          className={{ marginTop: "16px" }}
+          title="Text color"
+        />
         <div
           style={{
             margin: "16px 0",
@@ -188,7 +200,11 @@ export default function SideBar() {
             </p>
           }
         />
-        <CircleBorder className={{ marginTop: "16px" }} title="Border color" />
+        <CircleBorder
+          type="border_color"
+          className={{ marginTop: "16px" }}
+          title="Border color"
+        />
       </Property>
 
       {/* Layout */}

@@ -1,13 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { Customization } from "./Customization";
 import { Translation } from "./Translation";
 
 @Entity()
 export class Shop {
-  @PrimaryGeneratedColumn()
-  id: number;
 
-  @Column({ unique: true })
+  @PrimaryColumn()
   shopify_domain: string;
 
   @Column()
@@ -19,9 +17,9 @@ export class Shop {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => Customization, (customization) => customization.shop, { cascade: true })
+  @OneToOne(() => Customization, (customization) => customization.shopify_domain , { cascade: true })
   customization: Customization;
 
-  @OneToMany(() => Translation, (translation) => translation.shop)
+  @OneToMany(() => Translation, (translation) => translation.shopify_domain )
   translations: Translation[];
 }
